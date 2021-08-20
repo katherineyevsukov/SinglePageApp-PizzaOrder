@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, Link, NavLink, Switch } from 'react-router-dom';
 import './App.css'
-import Home from './components/Home'
-import OrderForm from './components/OrderForm'
+import Home from './Home'
+import OrderForm from './OrderForm'
 
 const App = () => {
   return (
-    <>
+    <div className="app">
     <header>
       <h1>Lambda Eats</h1>
       <NavLink to ="/">Home</NavLink>
@@ -20,7 +20,7 @@ const App = () => {
         <Home />
       </Route>
     </Switch>
-    </>
+    </div>
   );
 };
 export default App;
