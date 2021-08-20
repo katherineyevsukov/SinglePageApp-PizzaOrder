@@ -56,8 +56,7 @@ export default function OrderForm(){
     const postNewOrder = newOrder => {
         axios.post('https://reqres.in/api/orders', newOrder)
             .then(res => {
-                console.log(res.data)
-                setNewOrder(res.data)
+                setNewOrder([res.data])
             }).catch(err => console.error(err))
             setFormValues(initialFormValues)
     }
@@ -154,7 +153,8 @@ export default function OrderForm(){
                     <button id="order-button">Add to Order</button>
                 </form>
             </div>
-            <div>{newOrder}</div>
+            <div>{newOrder.name}</div>
+            <div>{newOrder.size}</div>
         </div>
 
     )
