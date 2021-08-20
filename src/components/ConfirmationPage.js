@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import * as yup from 'yup';
+import React from 'react'
 import '../styling/ConfirmationPage.css'
 
 export default function ConfirmationPage(props){
 
-    const { order, loading } = props
+    const { order } = props
     return(
         <>
             <div className='order-confirmation'> 

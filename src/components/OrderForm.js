@@ -3,8 +3,8 @@ import '../styling/OrderForm.css'
 import * as yup from 'yup';
 import schema from '../formSchema'
 import axios from 'axios'
-import { Switch, Link, Route, useRouteMatch, useHistory } from 'react-router-dom';
-import ConfirmationPage from './ConfirmationPage';
+import {  useRouteMatch, useHistory } from 'react-router-dom';
+
 
 
 
@@ -39,7 +39,7 @@ export default function OrderForm({ order, setOrder, setLoading, loading }){
     const [disabled, setDisabled] = useState(true)
     
     const history = useHistory();
-    const { url, path } = useRouteMatch()
+    const { url } = useRouteMatch()
 
     const validateForm = (name, value) => {
         yup.reach(schema, name)
@@ -178,20 +178,7 @@ export default function OrderForm({ order, setOrder, setLoading, loading }){
                 </form>
             </div>
              {loading && <h4>Your order is loading...</h4>}
-            {/* {order &&
-            <div className='order-confirmation'> 
-            <h4>Thank you for your order!</h4>
-            <p>Name: {order.name}</p>
-            <h5>Order Details</h5>
-            <p>{order.size}</p> 
            
-               {order.cheese && <li>Extra Cheese</li>} 
-               {order.pepperoni && <li>Pepperoni</li>} 
-               {order.peppers && <li>Banana Peppers</li>}
-               {order.pineapple && <li>Pineapple</li>}
-            
-               {order.special &&  <p>{order.special}</p>}
-               </div>} */}
         </div>
 
     )
