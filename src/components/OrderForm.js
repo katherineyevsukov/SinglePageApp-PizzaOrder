@@ -1,6 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+
+const initialFormValues = {
+    name: '',
+    size:'',
+    cheese: false,
+    pepperoni: false,
+    pineapple: false,
+    peppers: false,
+    special: '',
+}
+
+const initialFormErrors = {
+    name: '',
+    size:'',
+    cheese: '',
+    pepperoni: '',
+    pineapple: '',
+    peppers: '',
+    special: '',
+}
+
 
 export default function OrderForm(){
+
+    const [formValues, setFormValues] = useState(initialFormValues)
+    const [formErrors, setFormErrors] = useState(initialFormErrors)
+
+    const handleChange = evt => {
+        const { name, value, checked, type } = evt.target
+        const valueToUse = (type === 'checkox' ? checked : value)
+        
+        setFormValues({...formValues, [name]: valueToUse})
+    }
 
     return(
         <div className="pizza-page">
@@ -17,12 +48,14 @@ export default function OrderForm(){
                             id="name-input"
                             type='text'
                             name='name'
+                            onChange={handleChange}
                         />
                     </label>
                     
                     <label>Choose Your Size: 
                         <select id="size-dropdown"
                             name='size'
+                            onChange={handleChange}
                         >
                             <option value=''>--Select One--</option>
                             <option value='small'>Small</option>
@@ -36,24 +69,28 @@ export default function OrderForm(){
                         <input 
                             type="checkbox"
                             name="cheese"
+                            onChange={handleChange}
                         />
                     </label>
                     <label>Pepperoni
                         <input 
                             type="checkbox"
                             name="pepperoni"
+                            onChange={handleChange}
                         />
                     </label>
                     <label>Banana Peppers
                         <input 
                             type="checkbox"
                             name="peppers"
+                            onChange={handleChange}
                         />
                     </label>
                     <label>Pineapple
                         <input 
                             type="checkbox"
                             name="pineapple"
+                            onChange={handleChange}
                         />
                     </label>
 
@@ -62,6 +99,7 @@ export default function OrderForm(){
                             id="special-text"
                             type="text"
                             name="special"
+                            onChange={handleChange}
                         />
                     </label>
 
