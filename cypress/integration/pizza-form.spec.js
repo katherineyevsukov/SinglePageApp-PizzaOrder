@@ -1,0 +1,60 @@
+describe ('Pizza Form', () => {
+    beforeEach(() => {
+        cy.visit('http://localhost:3000/pizza')
+    })
+
+    const nameInput = () => cy.get('input[id="name-input"]')
+    const cheese = () => cy.get('input[name=cheese]')
+    const pepperoni = () => cy.get('input[name=pepperoni]')
+    const peppers = () => cy.get('input[name=peppers]')
+    const pineapple = () => cy.get('input[name=pineapple]')
+    const sizeDropdown = () => cy.get('select[id="size-dropdown"]')
+    const specialInstInput = () => cy.get('input[id="special-text"]')
+    const orderButton = () => cy.get('button[id="order-button"]')
+
+    it('sanity check', () => {
+        expect(1 + 1).to.equal(2)
+        expect(4 + 4).not.to.equal(10)
+        expect(1).not.to.equal('1')
+        expect({}).to.eql({})
+    })
+
+    it('can add text to name input box', () => {
+        nameInput()
+        .should('have.value', '')
+        .type('Kat')
+        .should('have.value', 'Kat')
+    })
+
+    it('select multiple toppings', () => {
+        cheese()
+        .should('not.be.checked')
+        .check()
+        .should('be.checked')
+        pepperoni()
+        .should('not.be.checked')
+        .check()
+        .should('be.checked')
+        peppers()
+        .should('not.be.checked')
+        .check()
+        .should('be.checked')
+        pineapple()
+        .should('not.be.checked')
+        .check()
+        .should('be.checked')
+    })
+
+    it('can submit an order', () => {
+        nameInput().type('Kat')
+        sizeDropdown().select('Medium')
+        cheese().check()
+        pepperoni().check()
+        peppers().check()
+        pineapple().check()
+        specialInstInput().type('no sauce')
+        orderButton().click()
+        cy.contains('Kat')
+        cy.contains('medium')
+    })
+})

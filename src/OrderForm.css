@@ -20,3 +20,8 @@
 input{
     margin-bottom: 2%;
 }
+
+p{
+    font-size: larger;
+    color: black;
+}

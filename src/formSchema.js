@@ -13,8 +13,8 @@ const schema = yup.object().shape({
     .boolean(),
     pepperoni: yup
     .boolean(),
-    pineapple: yup.
-    boolean(),
+    pineapple: yup
+    .boolean(),
     peppers: yup
     .boolean(),
     special: yup

@@ -15,5 +15,11 @@ header {
   border: 1px solid red;
 }
 
+a {
+  margin: auto 0;
+  background-color: tomato;
+  text-decoration: none;
+  color: white;
+}
 
 

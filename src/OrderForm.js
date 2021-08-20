@@ -33,7 +33,7 @@ export default function OrderForm(){
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
     // const [disabled, setDisabled] = useState(true)
-    const [newOrder, setNewOrder] = useState([])
+    const [order, setOrder] = useState([])
 
     const validateForm = (name, value) => {
         yup.reach(schema, name)
@@ -56,9 +56,10 @@ export default function OrderForm(){
     const postNewOrder = newOrder => {
         axios.post('https://reqres.in/api/orders', newOrder)
             .then(res => {
-                setNewOrder([res.data])
-            }).catch(err => console.error(err))
-            setFormValues(initialFormValues)
+                setOrder(res.data)
+                
+            }).catch(err => console.log(err))
+            
     }
 
     const formSubmit = evt => {
@@ -73,6 +74,7 @@ export default function OrderForm(){
             special: formValues.special,
         }
         postNewOrder(newOrder)
+        setFormValues(initialFormValues)
     }
 
     return(
@@ -90,6 +92,7 @@ export default function OrderForm(){
                             id="name-input"
                             type='text'
                             name='name'
+                            value={formValues.name}
                             onChange={handleChange}
                         />
                     </label>
@@ -98,6 +101,7 @@ export default function OrderForm(){
                     <label>Choose Your Size: 
                         <select id="size-dropdown"
                             name='size'
+                            value={formValues.size}
                             onChange={handleChange}
                         >
                             <option value=''>--Select One--</option>
@@ -153,8 +157,10 @@ export default function OrderForm(){
                     <button id="order-button">Add to Order</button>
                 </form>
             </div>
-            <div>{newOrder.name}</div>
-            <div>{newOrder.size}</div>
+            <h4>My orders:</h4>
+            <p>{order.name}</p>
+            <p>{order.size}</p>
+            
         </div>
 
     )
