@@ -21,7 +21,9 @@ input{
     margin-bottom: 2%;
 }
 
-p{
-    font-size: larger;
-    color: black;
+
+.order-confirmation{
+    margin-top: 2%;
+    text-align: center;
+    border: 2px solid tomato;
 }

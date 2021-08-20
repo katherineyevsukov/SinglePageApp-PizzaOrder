@@ -33,7 +33,7 @@ export default function OrderForm(){
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
     // const [disabled, setDisabled] = useState(true)
-    const [order, setOrder] = useState([])
+    const [order, setOrder] = useState(false)
 
     const validateForm = (name, value) => {
         yup.reach(schema, name)
@@ -157,9 +157,20 @@ export default function OrderForm(){
                     <button id="order-button">Add to Order</button>
                 </form>
             </div>
-            <h4>My orders:</h4>
-            <p>{order.name}</p>
-            <p>{order.size}</p>
+            {order &&
+            <div className='order-confirmation'> 
+            <h4>Thank you for your order!</h4>
+            <p>Name: {order.name}</p>
+            <h5>Order Details</h5>
+            <p>{order.size}</p> 
+           
+               {order.cheese && <li>Extra Cheese</li>} 
+               {order.pepperoni && <li>Pepperoni</li>} 
+               {order.peppers && <li>Banana Peppers</li>}
+               {order.pineapple && <li>Pineapple</li>}
+            
+               {order.special &&  <p>{order.special}</p>}
+               </div>}
             
         </div>
 
