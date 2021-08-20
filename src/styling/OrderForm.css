@@ -1,0 +1,60 @@
+.pizza-page {
+    margin: 2% auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80vh;
+    padding-top: 4%;
+    width: 50%;
+    
+    font-size: 2rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3em;
+    border: 1px solid tomato;
+    padding: 2em;
+    /* text-decoration: underline; */
+    
+    /* align-items: center; */
+}
+
+#pizza-form *{
+   
+    margin-bottom: 2%;
+}
+
+input, select{
+    margin-left: 1em;
+}
+
+#pizza-form button#order-button{
+    width: fit-content;
+    margin: 0 auto;
+    background-color: #4f4f4f;
+    color: whitesmoke;
+    border-radius: 6px;
+    padding: 1em;
+    margin-top: 1em;
+}
+
+input{
+    margin-bottom: 2%;
+}
+
+.form-errors{
+    color:red;
+}
+
+.form-header-container{
+    font-size: 4rem;
+    border-bottom: 1px solid tomato;
+}
+
+.toppings{
+    text-decoration: none;
+    font-size: smaller;
+}
+

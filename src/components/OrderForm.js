@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import './OrderForm.css'
+import '../styling/OrderForm.css'
 import * as yup from 'yup';
-import schema from './formSchema'
+import schema from '../formSchema'
 import axios from 'axios'
+import { Switch, Link, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import ConfirmationPage from './ConfirmationPage';
+
+
 
 
 const initialFormValues = {
@@ -28,12 +32,14 @@ const initialFormErrors = {
 
 
 
-export default function OrderForm(){
+export default function OrderForm({ order, setOrder, setLoading, loading }){
 
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
-    // const [disabled, setDisabled] = useState(true)
-    const [order, setOrder] = useState(false)
+    const [disabled, setDisabled] = useState(true)
+    
+    const history = useHistory();
+    const { url, path } = useRouteMatch()
 
     const validateForm = (name, value) => {
         yup.reach(schema, name)
@@ -49,19 +55,27 @@ export default function OrderForm(){
         setFormValues({...formValues, [name]: valueToUse})
     }
 
-    // useEffect(() => {
-    //     schema.isValid(formValues).then(valid => setDisabled(!valid))
-    // }, [formValues])
+    useEffect(() => {
+        schema.isValid(formValues).then(valid => setDisabled(!valid))
+    }, [formValues])
 
     const postNewOrder = newOrder => {
+        setLoading(true)
         axios.post('https://reqres.in/api/orders', newOrder)
             .then(res => {
+                // console.log(res.data)
+                history.push(`${url}/confirmation`)
                 setOrder(res.data)
-                
-            }).catch(err => console.log(err))
-            
+                setLoading(false)
+            }).catch(err => {
+                console.log(err)
+                history.push(`${url}/error`)
+                setLoading(false)
+            })      
     }
 
+
+    ; 
     const formSubmit = evt => {
         evt.preventDefault()
         const newOrder = {
@@ -75,7 +89,12 @@ export default function OrderForm(){
         }
         postNewOrder(newOrder)
         setFormValues(initialFormValues)
+        
     }
+
+    
+
+
 
     return(
         <div className="pizza-page">
@@ -84,7 +103,7 @@ export default function OrderForm(){
             </div>
 
             <div className='form-container'>
-                <h3>Build Your Pizza</h3>
+                
                 <form id="pizza-form" onSubmit={formSubmit}>
                     
                     <label>Name:
@@ -96,7 +115,7 @@ export default function OrderForm(){
                             onChange={handleChange}
                         />
                     </label>
-                    <p>{formErrors.name}</p>
+                    <p className='form-errors'>{formErrors.name}</p>
                     
                     <label>Choose Your Size: 
                         <select id="size-dropdown"
@@ -110,9 +129,10 @@ export default function OrderForm(){
                             <option value='large'>Large</option>
                         </select>
                     </label>
+                    <p className='form-errors'>{formErrors.size}</p>
 
                     <h4>Add toppings:</h4>
-                    <label>Extra Cheese
+                    <label className="toppings">Extra Cheese
                         <input 
                             type="checkbox"
                             name="cheese"
@@ -120,7 +140,7 @@ export default function OrderForm(){
                             onChange={handleChange}
                         />
                     </label>
-                    <label>Pepperoni
+                    <label className="toppings">Pepperoni
                         <input 
                             type="checkbox"
                             name="pepperoni"
@@ -128,7 +148,7 @@ export default function OrderForm(){
                             onChange={handleChange}
                         />
                     </label>
-                    <label>Banana Peppers
+                    <label className="toppings">Banana Peppers
                         <input 
                             type="checkbox"
                             name="peppers"
@@ -136,7 +156,7 @@ export default function OrderForm(){
                             onChange={handleChange}
                         />
                     </label>
-                    <label>Pineapple
+                    <label className="toppings">Pineapple
                         <input 
                             type="checkbox"
                             name="pineapple"
@@ -153,11 +173,12 @@ export default function OrderForm(){
                             onChange={handleChange}
                         />
                     </label>
-
-                    <button id="order-button">Add to Order</button>
+                    <button
+                     disabled={disabled} id="order-button">Add to Order</button>
                 </form>
             </div>
-            {order &&
+             {loading && <h4>Your order is loading...</h4>}
+            {/* {order &&
             <div className='order-confirmation'> 
             <h4>Thank you for your order!</h4>
             <p>Name: {order.name}</p>
@@ -170,8 +191,7 @@ export default function OrderForm(){
                {order.pineapple && <li>Pineapple</li>}
             
                {order.special &&  <p>{order.special}</p>}
-               </div>}
-            
+               </div>} */}
         </div>
 
     )
